@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class MovieService {
   constructor() {}
-  movieList = new BehaviorSubject<Movie[]>([
+  private movieList = new BehaviorSubject<Movie[]>([
     {
       id: 1,
       title: 'Robot',
@@ -16,6 +16,9 @@ export class MovieService {
     },
   ]);
   getMovies(): Observable<Movie[]> {
-    return this.movieList.next() as Observable;
+    return this.movieList.asObservable();
+  }
+  addMovie(m: Movie) {
+    this.movieList.next((movieList) => [...this.movieList, m]);
   }
 }
