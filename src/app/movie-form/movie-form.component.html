@@ -1,6 +1,7 @@
-<form [formGroup]="movieForm">
+<form [formGroup]="movieForm" (ngSubmit)="onSubmit()">
   <input formControlName="title" />
   <input formControlName="director" />
   <input formControlName="rating" />
   <input formControlName="year" />
+  <button type="submit" [disabled]="movieForm.invalid"></button>
 </form>
