@@ -22,14 +22,9 @@ export class MovieService {
     m.id = Date.now();
     this.movieList.next([...this.movieList.value, m]);
   }
-  updateMovie(m: Movie) {
-    const movie = this.movieList.value.find((x) => x.id === m.id);
-    if (movie) {
-    }
-    m.id = movie?.id;
-    m.title = movie?.title;
-    m.director = movie?.director;
-    m.rating = movie?.rating;
-    m.year = movie?.year;
+  updateMovie(updated: Movie) {
+    const current = this.movieList.value;
+    const nextList = current.map((m) => (m.id === updated.id ? updated : m));
+    this.movieList.next(nextList);
   }
 }
