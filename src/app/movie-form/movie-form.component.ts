@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MovieService } from '../movie.service';
 
 @Component({
   selector: 'app-movie-form',
@@ -14,7 +15,8 @@ import {
   styleUrl: './movie-form.component.css',
 })
 export class MovieFormComponent implements OnInit {
-  constructor() {}
+  constructor(private movieService: MovieService) {}
+  newMovie: Movie | null = null;
   movieForm = new FormGroup({
     title: new FormControl('', Validators.required),
     director: new FormControl('', Validators.required),
@@ -22,4 +24,14 @@ export class MovieFormComponent implements OnInit {
     year: new FormControl('', Validators.required),
   });
   ngOnInit(): void {}
+  onSubmit() {
+    const addedMovie = this.movieForm.getRawValue();
+    this.newMovie = {
+      title: String(addedMovie.title),
+      rating: Number(addedMovie.rating),
+      year: Number(addedMovie.year),
+      director: String(addedMovie.director),
+    };
+    this.movieService.addMovie(this.newMovie);
+  }
 }
