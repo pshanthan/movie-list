@@ -22,10 +22,22 @@ export class MovieFormComponent implements OnInit {
   ) {}
   newMovie: Movie | null = null;
   movieForm = new FormGroup({
-    title: new FormControl('', Validators.required),
-    director: new FormControl('', Validators.required),
-    rating: new FormControl('', Validators.required),
-    year: new FormControl('', Validators.required),
+    title: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    director: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    rating: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    year: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
   });
   editingId: number | null = null;
   ngOnInit(): void {
