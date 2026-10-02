@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../movie.service';
 import { Movie } from '../../models/Movie';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-movie-list',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './movie-list.component.html',
   styleUrl: './movie-list.component.css',
 })
