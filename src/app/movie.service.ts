@@ -19,6 +19,10 @@ export class MovieService {
     return this.movieList.asObservable();
   }
   addMovie(m: Movie) {
-    this.movieList.next((movieList) => [...this.movieList, m]);
+    m.id = Date.now();
+    this.movieList.next([...this.movieList.value, m]);
+  }
+  updateMovie(m: Movie) {
+    const movie = this.movieList.value.find((x) => x.id === m.id);
   }
 }
