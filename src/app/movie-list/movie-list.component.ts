@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../movie.service';
 import { Movie } from '../../models/Movie';
 
@@ -8,9 +8,12 @@ import { Movie } from '../../models/Movie';
   templateUrl: './movie-list.component.html',
   styleUrl: './movie-list.component.css',
 })
-export class MovieListComponent {
+export class MovieListComponent implements OnInit {
   constructor(private movieService: MovieService) {}
   movies: Movie[] = [];
+  ngOnInit(): void {
+    this.getMovies();
+  }
   getMovies() {
     return this.movieService.getMovies().subscribe((m) => (this.movies = m));
   }
