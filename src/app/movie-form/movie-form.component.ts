@@ -27,19 +27,39 @@ export class MovieFormComponent implements OnInit {
     rating: new FormControl('', Validators.required),
     year: new FormControl('', Validators.required),
   });
-  ngOnInit(): void {}
-  idParam: number | null = Number(
-    this.activatedRoute.snapshot.paramMap.get('id'),
-  );
+  editingId: number | null = null;
+  ngOnInit(): void {
+    const idParam = this.activatedRoute.snapshot.paramMap.get('id');
+    if (idParam) {
+      this.editingId = Number(idParam);
+      this.movieService.getMovies().subscribe((movies) => {
+        const found = movies.find((m) => m.id === this.editingId);
+        if (found) {
+          this.movieForm.patchValue({
+            title: found.title,
+            director: found.director,
+            rating: String(found.rating),
+            year: String(found.year),
+          });
+        }
+      });
+    }
+  }
+
   onSubmit() {
-    const addedMovie = this.movieForm.getRawValue();
-    this.newMovie = {
-      id: Date.now(),
-      title: String(addedMovie.title),
-      rating: Number(addedMovie.rating),
-      year: Number(addedMovie.year),
-      director: String(addedMovie.director),
+    const raw = this.movieForm.getRawValue();
+    const movie: Movie = {
+      title: raw.title,
+      director: raw.director,
+      rating: Number(raw.rating),
+      year: Number(raw.year),
     };
-    this.movieService.addMovie(this.newMovie);
+    if (this.editingId) {
+      movie.id = this.editingId;
+      this.movieService.updateMovie(movie);
+    } else {
+      this.movieService.addMovie(movie);
+    }
+    this.movieForm.reset();
   }
 }
