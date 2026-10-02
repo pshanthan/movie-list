@@ -24,5 +24,12 @@ export class MovieService {
   }
   updateMovie(m: Movie) {
     const movie = this.movieList.value.find((x) => x.id === m.id);
+    if (movie) {
+    }
+    m.id = movie?.id;
+    m.title = movie?.title;
+    m.director = movie?.director;
+    m.rating = movie?.rating;
+    m.year = movie?.year;
   }
 }
