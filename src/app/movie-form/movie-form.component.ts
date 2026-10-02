@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MovieService } from '../movie.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-movie-form',
@@ -15,7 +16,10 @@ import { MovieService } from '../movie.service';
   styleUrl: './movie-form.component.css',
 })
 export class MovieFormComponent implements OnInit {
-  constructor(private movieService: MovieService) {}
+  constructor(
+    private movieService: MovieService,
+    private activatedRoute: ActivatedRoute,
+  ) {}
   newMovie: Movie | null = null;
   movieForm = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -24,9 +28,13 @@ export class MovieFormComponent implements OnInit {
     year: new FormControl('', Validators.required),
   });
   ngOnInit(): void {}
+  idParam: number | null = Number(
+    this.activatedRoute.snapshot.paramMap.get('id'),
+  );
   onSubmit() {
     const addedMovie = this.movieForm.getRawValue();
     this.newMovie = {
+      id: Date.now(),
       title: String(addedMovie.title),
       rating: Number(addedMovie.rating),
       year: Number(addedMovie.year),
