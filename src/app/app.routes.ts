@@ -12,7 +12,7 @@ export const routes: Routes = [
     component: MovieFormComponent,
   },
   {
-    path: 'edit',
+    path: 'edit/:id',
     component: MovieFormComponent,
   },
 ];
