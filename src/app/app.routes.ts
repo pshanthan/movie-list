@@ -11,4 +11,8 @@ export const routes: Routes = [
     path: 'add',
     component: MovieFormComponent,
   },
+  {
+    path: 'edit',
+    component: MovieFormComponent,
+  },
 ];
